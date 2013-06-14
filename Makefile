@@ -1,4 +1,4 @@
-CC := gcc
+CC := g++
 
 FLAGS :=  \
 	-w
@@ -7,8 +7,9 @@ INCLUDE := ./
 
 FILES := \
 	main.c \
-	func.c \
-	box.c
+	mpeg4.cpp \
+	func.cpp
+
 
 TARGET := mp4read
 
