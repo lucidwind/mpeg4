@@ -8,7 +8,8 @@ INCLUDE := ./
 FILES := \
 	main.c \
 	mpeg4.cpp \
-	func.cpp
+	func.cpp \
+	track.cpp
 
 
 TARGET := mp4read

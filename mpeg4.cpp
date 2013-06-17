@@ -21,14 +21,26 @@ mpeg4::~mpeg4()
 {
 }
 
-int32_t mpeg4::get_track(int index)
+track *  mpeg4::get_track(int index)
 {
-
+        if(index < 1)
+                return NULL;
+        track * t_track = first_track;
+        while(index > 1)
+        {
+                if(t_track == NULL)
+                {
+                        return NULL;
+                }
+                t_track = t_track->next;
+                --index;
+        }
+        return t_track;
 }
 
 int32_t mpeg4::count_track()
 {
-
+        return track_num;
 }
 
 int32_t mpeg4::parse_chunk(uint64_t file_offset)
@@ -82,9 +94,19 @@ int32_t mpeg4::parse_chunk(uint64_t file_offset)
         {
                 if(chunk_type == make4cc('t','r','a','k'))
                 {
+                        track *t_track = new track(file_fd,file_offset,chunk_size);
+                        if(last_track)
+                        {
+                                last_track->next = t_track;
+                        }
+                        else
+                        {
+                                first_track = t_track;
+                        }
+                        last_track = t_track;
                         track_num ++;
-
-                        printf("Current track_index------------- %d-----------------offset %lld\n",track_num,data_offset);
+                        
+                        printf("Current track_index------------- %d-----------------offset %lld size %lld\n",track_num,file_offset,chunk_size);
                 }
  //               printf("here into ----------\n");
                 result = parse_chunk(data_offset);

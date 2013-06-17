@@ -2,7 +2,7 @@
 #define __MPEG4_H
 
 #include <stdint.h>
-#include "track.h"
+#include <track.h>
 
 /*
   *        算法描述：
@@ -19,17 +19,19 @@ class mpeg4
 {
 public:
         mpeg4(int fd,uint64_t offset);
-        int32_t get_track(int index);
+        track * get_track(int index);
         int32_t count_track();
 
         int32_t parse_chunk(uint64_t file_offset);
         int32_t parse_trackhead();
+
 public:
         int file_fd;
         uint64_t file_offset;
         int track_num;
         track *first_track;
         track *last_track;
+
 private:
         virtual ~mpeg4();
 };
